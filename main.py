@@ -1,4 +1,5 @@
 import argparse
+import configparser
 from github import Github
 
 
@@ -8,8 +9,9 @@ class GithubHandler:
         self.token = token
         self.org_name = org_name
         self.git = Github(token)
-        self.user = self.git.get_user(self.name)
-        self.organization = self.git.get_organization(self.org_name)
+        self.user = self.git.get_user()
+        if org_name:
+            self.organization = self.git.get_organization(self.org_name)
 
     @staticmethod
     def __create_repo(repo_type, repo_name):
@@ -44,10 +46,15 @@ class GithubHandler:
 
 def main():
     parser = argparse.ArgumentParser()
+    config = configparser.ConfigParser()
+    ghconfig = 'gh.ini'
 
-    parser.add_argument("-n", "--name", help="Username for login.")
-    parser.add_argument("-t", "--token", help="Token for API access.")
-    parser.add_argument("-o", "--org", help="Name of organization.")
+    config.read(ghconfig)
+
+    if 'github.org' not in config.sections():
+        print(f"No populated {ghconfig} github config file found. Exiting.")
+        exit(1)
+
     parser.add_argument("-r", "--repo", help="Name of code repository.")
 
     parser.add_argument("-c", "--create", dest="create", action="store_const", const="create", help="Create code repository.")
@@ -55,11 +62,22 @@ def main():
 
     args = parser.parse_args()
 
-    gh = GithubHandler(args.name, args.token, args.org)
+    user = config['github.org']['User']
+    token = config['github.org']['Token']
+    org = config['github.org']['Organization']
+
+    if not user or not token:
+        print(f"No proper GitHub username and/or token was found, please check {ghconfig} exists and is populated. Exiting.")
+        exit(1)
+
+    gh = GithubHandler(user, token, org)
+    create = gh.create_org_repo if org else gh.create_user_repo
+    delete = gh.delete_org_repo if org else gh.delete_user_repo
+
     if args.create:
-        gh.create_org_repo(args.repo)
+        create(args.repo)
     elif args.delete:
-        gh.delete_org_repo(args.repo)
+        delete(args.repo)
 
 
 if __name__ == '__main__':
