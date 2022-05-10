@@ -2,6 +2,15 @@
 
 ## Install and setup
 
+Add `ghi.ini` file and appropriate info.
+
+```
+[github.org]
+User =
+Token =
+Organization =
+```
+
 Build container image.
 
 ```
