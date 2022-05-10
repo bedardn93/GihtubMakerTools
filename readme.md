@@ -1,4 +1,4 @@
-# Github Maker Tools
+# Gihtub Maker Tools
 
 ## Usage
 
@@ -27,7 +27,7 @@ With docker.
 
 ```
 docker run -it \
-github-maker-tools \
+gihtub-maker-tools \
 -d -r testrepo
 ```
 
@@ -37,7 +37,7 @@ Clone this repository.
 
 `git clone https://github.com/bedardn93/GihtubMakerTools`
 
-Create a `ght.ini` file with you info inside `GithubMakerTools`.
+Create a `ght.ini` file with you info inside `GihtubMakerTools`.
 
 ```
 [github.org]
@@ -55,5 +55,5 @@ pip install -r /path/to/requirements.txt.
 Or if using docker.
 
 ```
-docker build -t github-maker-tools .
+docker build -t gihtub-maker-tools .
 ```
