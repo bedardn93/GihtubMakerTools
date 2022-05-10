@@ -2,6 +2,14 @@
 
 ## Usage
 
+Create a repo.
+
+```
+docker run -it \
+github-maker-tools \
+-c -r testrepo
+```
+
 Delete a repo.
 
 ```
@@ -12,24 +20,21 @@ github-maker-tools \
 
 ## Install and setup
 
-Add `ght.ini` file and appropriate info.
+Clone this repository.
+
+`git clone https://github.com/bedardn93/GihtubMakerTools`
+
+Create a `ght.ini` file with you info inside `GithubMakerTools`.
 
 ```
 [github.org]
-User =
-Token =
-Organization =
+User = bedardn93
+Token = ghp_abcdefg
+Organization = supertestorg123
 ```
 
 Build container image.
 
 ```
 docker build -t github-maker-tools .
-```
-
-Run and enter container.
-
-```
-docker run -it github-maker-tools \
-    COMMAND...
 ```
