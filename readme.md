@@ -48,7 +48,7 @@ Organization = supertestorg123
 Install everything.
 
 ```
-pip install -r /path/to/requirements.txt.
+pip install -r requirements.txt.
 ```
 
 Or if using docker.
