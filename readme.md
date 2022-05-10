@@ -20,7 +20,6 @@ gihtub-maker-tools \
 
 ```
 python main.py -d -r testrepo
--c -r testrepo
 ```
 
 With docker.
