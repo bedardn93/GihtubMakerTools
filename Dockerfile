@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 # Avoiding repeated reinstalls upon making unrelated code changes.
 COPY . .
 
-#ENTRYPOINT [ "python main.py" ]
+ENTRYPOINT [ "python", "main.py" ]
