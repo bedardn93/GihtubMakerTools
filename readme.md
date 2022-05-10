@@ -1,5 +1,15 @@
 # Github Maker Tools
 
+## Usage
+
+Delete a repo.
+
+```
+docker run -it \
+github-maker-tools \
+-d -r testrepo
+```
+
 ## Install and setup
 
 Add `ght.ini` file and appropriate info.
@@ -21,6 +31,5 @@ Run and enter container.
 
 ```
 docker run -it github-maker-tools \
-    github-maker-tools COMMAND...
+    COMMAND...
 ```
-
