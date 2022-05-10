@@ -12,7 +12,7 @@ With docker.
 
 ```
 docker run -it \
-github-maker-tools \
+gihtub-maker-tools \
 -c -r testrepo
 ```
 
