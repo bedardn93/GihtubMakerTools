@@ -47,7 +47,7 @@ class GithubHandler:
 def main():
     parser = argparse.ArgumentParser()
     config = configparser.ConfigParser()
-    ghconfig = 'gh.ini'
+    ghconfig = 'ght.ini'
 
     config.read(ghconfig)
 
