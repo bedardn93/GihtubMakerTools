@@ -32,15 +32,19 @@ class GithubHandler:
         repo.delete()
 
     def create_org_repo(self, repo_name):
+        print(f"Creating new repo \"{repo_name}\" for \"{self.organization.login}\".")
         self.__create_repo(self.organization, repo_name)
 
     def create_user_repo(self, repo_name):
+        print(f"Creating new repo \"{repo_name}\" for \"{self.user.login}\".")
         self.__create_repo(self.user, repo_name)
 
     def delete_org_repo(self, repo_name):
+        print(f"Deleting repo \"{repo_name}\" from \"{self.organization.login}\".")
         self.__delete_repo(self.organization, repo_name)
 
     def delete_user_repo(self, repo_name):
+        print(f"Deleting repo \"{repo_name}\" from \"{self.user.login}\".")
         self.__delete_repo(self.user, repo_name)
 
 
@@ -55,16 +59,17 @@ def main():
         print(f"No populated {ghconfig} github config file found. Exiting.")
         exit(1)
 
-    parser.add_argument("-r", "--repo", help="Name of code repository.")
+    parser.add_argument("-r", "--repo", default="", help="Name of code repository.")
 
     parser.add_argument("-c", "--create", dest="create", action="store_const", const="create", help="Create code repository.")
     parser.add_argument("-d", "--delete", dest="delete", action="store_const", const="delete", help="Delete code repository.")
 
     args = parser.parse_args()
 
-    user = config['github.org']['User']
-    token = config['github.org']['Token']
-    org = config['github.org']['Organization']
+    user = config['github.org']['User'].strip("\'\"")
+    token = config['github.org']['Token'].strip("\'\"")
+    org = config['github.org']['Organization'].strip("\'\"")
+    repo = args.repo.strip("\'\"")
 
     if not user or not token:
         print(f"No proper GitHub username and/or token was found, please check {ghconfig} exists and is populated. Exiting.")
@@ -74,10 +79,13 @@ def main():
     create = gh.create_org_repo if org else gh.create_user_repo
     delete = gh.delete_org_repo if org else gh.delete_user_repo
 
-    if args.create:
-        create(args.repo)
-    elif args.delete:
-        delete(args.repo)
+    if repo:
+        if args.create:
+            create(repo)
+        elif args.delete:
+            delete(repo)
+    else:
+        print("Please specify a repo using the -r or --repo argument.")
 
 
 if __name__ == '__main__':
